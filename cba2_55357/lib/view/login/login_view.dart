@@ -29,6 +29,17 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
+  void _validateOnSubmit() {
+
+    if(_passwordError==null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => const RegisterView()),
+      );
+    }
+  }
+
   @override
   void initState(){
     super.initState();
@@ -165,14 +176,7 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                             color: Colors.white), // kolor tekstu na biały),
                       ),
-                      onPressed: () {
-                        // Navigate to second route when tapped.
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RegisterView()),
-                        );
-                      },
+                      onPressed: _validateOnSubmit, // Navigate to second route when tapped.
                     ),
                   ),
                 ),
