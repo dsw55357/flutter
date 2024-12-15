@@ -3,8 +3,41 @@ import 'package:cba2_55357/utils/my_images.dart';
 import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/material.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _passwordFocus = FocusNode();
+  String? _passwordError;
+
+  void _validatePassword() {
+    final password = _passwordController.text;
+    
+    setState(() {
+      print(password);
+      if(password.length < 8) {
+        _passwordError = 'Hasło za krótkie. Min 8 znaków';
+      } else {
+        _passwordError = null;
+      }
+    });
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    _passwordFocus.addListener(() {
+      if(!_passwordFocus.hasFocus){
+        _validatePassword();
+      }
+    });
+  }
 
   /*
   String? validator(String? value)
@@ -18,7 +51,6 @@ class LoginView extends StatelessWidget {
       }
       return null;
   } */
-
   @override
   Widget build(BuildContext context) {
     return SafeArea( //wrapuj widzet, odsuwamy się od paska systemowego
@@ -55,7 +87,7 @@ class LoginView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 21.0),
                     child: Container(
-                      height: 50,
+                      //height: 50,
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: 'Email or User name',
@@ -85,12 +117,17 @@ class LoginView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 21.0),
                     child: Container(
                       //width: 390,
-                      height: 50,
+                      //height: 50,
                       child: TextFormField(
+                        controller: _passwordController,
+                        focusNode: _passwordFocus,
                         decoration: InputDecoration(
                           hintText: 'Password', // Podpowiedź
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.lock),
+                          errorText: _passwordError,
+                          //helperText: ' ',
+                          errorStyle: TextStyle(color: Colors.red),
                         ),
                         obscureText: true, // Ukrycie tekstu (hasło)
                       ),
