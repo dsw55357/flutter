@@ -22,7 +22,7 @@ class _LoginViewState extends State<LoginView> {
     setState(() {
       print(password);
       if(password.length < 8) {
-        _passwordError = 'Hasło za krótkie. Min 8 znaków';
+        _passwordError = 'Hasło za krótkie. Podaj min.8 znaków';
       } else {
         _passwordError = null;
       }
