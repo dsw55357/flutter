@@ -1,3 +1,4 @@
+// material - tylko android
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatelessWidget {

@@ -6,62 +6,87 @@ import 'package:flutter/material.dart';
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
+  /*
+  String? validator(String? value)
+  {
+      print('!! validator.$value');
+      if (value == null || value.isEmpty) {
+        return 'This field is required';
+      }
+      if (value != null && value.contains('@')) {
+        return 'Do not use the @ char.';
+      }
+      return null;
+  } */
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SafeArea( //wrapuj widzet, odsuwamy się od paska systemowego
       child: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              SizedBox(height: 62), // Przestrzeń od góry
+        body: SizedBox( //widzet praktyczniejszy niz continer
+          width: double.infinity, //cała szerokość ekranu
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column( // opis jak zmienić 1:04:12
+              // children - lista
+              children: [
+                const SizedBox(height: 62), // Przestrzeń od góry
+                Image.asset(MyImages.logo),
+                // const przyswpiesz kompilację
+                const SizedBox(height: 21), // Odstęp między grafiką a tekstem
 
-              Image.asset(MyImages.logo),
-              SizedBox(height: 20), // Odstęp między grafiką a tekstem
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 19.0),
-                  child: Text('Sign In',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: MyColors.purleColor,
-                      )),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 19.0),
+                    child: Text('Sign In',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                          color: MyColors.purleColor,
+                        )),
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 21.0),
-                  child: Container(
-                    height: 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Email or User name',
-                        // Podpowiedź dla pierwszego pola
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person),
+                SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 21.0),
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Email or User name',
+                          // Podpowiedź dla pierwszego pola
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.person),
+                        ),
+                        keyboardType: TextInputType
+                            .emailAddress, // Klawiatura dostosowana do e-maili
+                        validator: (value) {
+                          print('!! validator.$value');
+                          if (value == null || value.isEmpty)
+                            {
+                              return 'Please enter some text';
+                            }
+                          return null;
+                        },
                       ),
-                      keyboardType: TextInputType
-                          .emailAddress, // Klawiatura dostosowana do e-maili
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
-              // Drugie pole
-              Align(
+                SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+                // Drugie pole
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 21.0),
                     child: Container(
                       //width: 390,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                         decoration: InputDecoration(
                           hintText: 'Password', // Podpowiedź
                           border: OutlineInputBorder(),
@@ -71,53 +96,63 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 21.0, top: 16),                  
-                  child: Text('Forget Password ?',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: MyColors.purleColor,
-                      )),
                 ),
-              ),
 
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple, // kolor tła przycisku
-                      minimumSize: const Size(390, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(15), // zaokrąglenie na 15px
-                      ), // szerokość i wysokość
-                    ),
-                    child: const Text(
-                      'Zaloguj się',
-                      style: TextStyle(
-                          color: Colors.white), // kolor tekstu na biały),
-                    ),
-                    onPressed: () {
-                      // Navigate to second route when tapped.
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterView()),
-                      );
-                    },
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 21.0, top: 16),
+                    child: Text('Forget Password ?',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: MyColors.purleColor,
+                        )),
                   ),
                 ),
-              ),
-            ],
+
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple, // kolor tła przycisku
+                        minimumSize: const Size(390, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(15), // zaokrąglenie na 15px
+                        ), // szerokość i wysokość
+                      ),
+                      child: const Text(
+                        'Zaloguj się',
+                        style: TextStyle(
+                            color: Colors.white), // kolor tekstu na biały),
+                      ),
+                      onPressed: () {
+                        // Navigate to second route when tapped.
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterView()),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+
+/*
+*
+*
+*
+*
+*
+* */
