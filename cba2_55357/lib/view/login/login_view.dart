@@ -59,6 +59,14 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void dispose() {
+    // Zwalniamy zasoby
+    _passwordController.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState(){
     super.initState();
     _passwordFocus.addListener(() {
