@@ -11,18 +11,31 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _passwordFocus = FocusNode();
+  String? _emailError;
   String? _passwordError;
 
   void _validatePassword() {
+    final email = _emailController.text;
     final password = _passwordController.text;
     
     setState(() {
+
+      // Sprawdzenie e-maila
+      if (email.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(email)) {
+        _emailError = "Podaj poprawny adres e-mail.";
+      } else {
+        _emailError = null;
+      }
+
       print(password);
-      if(password.length < 8) {
-        _passwordError = 'Hasło za krótkie. Podaj min.8 znaków';
+      // Sprawdzenie hasła
+      if (password.isEmpty) {
+        _passwordError = "Pole hasła nie może być puste.";
+      } else if(password.length < 8) {
+        _passwordError = 'Hasło musi mieć co najmniej 8 znaków.';
       } else {
         _passwordError = null;
       }
@@ -100,22 +113,16 @@ class _LoginViewState extends State<LoginView> {
                     child: Container(
                       //height: 50,
                       child: TextFormField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'Email or User name',
                           // Podpowiedź dla pierwszego pola
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.person),
+                          errorText: _emailError,
                         ),
                         keyboardType: TextInputType
                             .emailAddress, // Klawiatura dostosowana do e-maili
-                        validator: (value) {
-                          print('!! validator.$value');
-                          if (value == null || value.isEmpty)
-                            {
-                              return 'Please enter some text';
-                            }
-                          return null;
-                        },
                       ),
                     ),
                   ),
