@@ -14,22 +14,26 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
   String? _emailError;
   String? _passwordError;
 
-  void _validatePassword() {
+  void _validateEmail() {
     final email = _emailController.text;
-    final password = _passwordController.text;
-    
     setState(() {
-
       // Sprawdzenie e-maila
       if (email.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(email)) {
         _emailError = "Podaj poprawny adres e-mail.";
       } else {
         _emailError = null;
       }
+    });
 
+  }
+
+  void _validatePassword() {
+    final password = _passwordController.text;
+    setState(() {
       print(password);
       // Sprawdzenie hasła
       if (password.isEmpty) {
@@ -42,9 +46,10 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
+
   void _validateOnSubmit() {
 
-    if(_passwordError==null) {
+    if(_passwordError==null && _emailError == null) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -61,6 +66,13 @@ class _LoginViewState extends State<LoginView> {
         _validatePassword();
       }
     });
+    super.initState();
+    _emailFocus.addListener(() {
+      if(!_emailFocus.hasFocus){
+        _validateEmail();
+      }
+    });
+
   }
 
   /*
@@ -114,6 +126,7 @@ class _LoginViewState extends State<LoginView> {
                       //height: 50,
                       child: TextFormField(
                         controller: _emailController,
+                        focusNode: _emailFocus,
                         decoration: InputDecoration(
                           hintText: 'Email or User name',
                           // Podpowiedź dla pierwszego pola
