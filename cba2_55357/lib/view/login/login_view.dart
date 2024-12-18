@@ -1,7 +1,10 @@
 import 'package:cba2_55357/utils/my_colors.dart';
 import 'package:cba2_55357/utils/my_images.dart';
+import 'package:cba2_55357/view/home/home.dart';
 import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -15,66 +18,82 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
-  String? _emailError;
-  String? _passwordError;
+  String? _emailError = '.';
+  String? _passwordError = '.';
 
   void _validateEmail() {
     final email = _emailController.text;
-    setState(() {
       // Sprawdzenie e-maila
       if (email.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(email)) {
-        _emailError = "Podaj poprawny adres e-mail.";
+        setState(() {
+          _emailError = "Podaj poprawny adres e-mail";
+        });
+        return;
       } else {
         _emailError = null;
       }
-    });
-
   }
 
   void _validatePassword() {
     final password = _passwordController.text;
-    setState(() {
-      print(password);
       // Sprawdzenie hasła
+    setState(() {
       if (password.isEmpty) {
-        _passwordError = "Pole hasła nie może być puste.";
+          _passwordError = "Pole hasła nie może być puste";
+          return;
       } else if(password.length < 8) {
-        _passwordError = 'Hasło musi mieć co najmniej 8 znaków.';
+        _passwordError = 'Hasło musi mieć co najmniej 8 znaków';
+        return;
       } else {
         _passwordError = null;
       }
+  });
+
+  }
+
+  Future<void> _isLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('isLoggedIn', true);
     });
   }
 
-
-  void _validateOnSubmit() {
-
+  //void _validateOnSubmit() {
+  Future<void> _validateOnSubmit() async {
+    setState(() {
     if(_passwordError==null && _emailError == null) {
+      print("submit...");
       Navigator.push(
-          context,
-          MaterialPageRoute(
-          builder: (context) => const RegisterView()),
+        context,
+        MaterialPageRoute(
+            builder: (context) => const HomeView()),
       );
+
+      // Jeśli walidacja się powiedzie, zapisujemy isLoggedIn = true
+      _isLoggedIn();
     }
+    });
   }
 
   @override
   void dispose() {
     // Zwalniamy zasoby
     _passwordController.dispose();
-    _passwordFocusNode.dispose();
+    _passwordFocus.dispose();
+    _emailController.dispose();
+    _emailFocus.dispose();
     super.dispose();
   }
 
   @override
   void initState(){
     super.initState();
+
     _passwordFocus.addListener(() {
       if(!_passwordFocus.hasFocus){
         _validatePassword();
       }
     });
-    super.initState();
     _emailFocus.addListener(() {
       if(!_emailFocus.hasFocus){
         _validateEmail();
@@ -99,6 +118,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return SafeArea( //wrapuj widzet, odsuwamy się od paska systemowego
       child: Scaffold(
+        appBar: AppBar(title: const Text('Login')),
         body: SizedBox( //widzet praktyczniejszy niz continer
           width: double.infinity, //cała szerokość ekranu
           child: Padding(
@@ -204,7 +224,7 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                             color: Colors.white), // kolor tekstu na biały),
                       ),
-                      onPressed: _validateOnSubmit, // Navigate to second route when tapped.
+                      onPressed: () =>_validateOnSubmit(), // Navigate to second route when tapped.
                     ),
                   ),
                 ),
