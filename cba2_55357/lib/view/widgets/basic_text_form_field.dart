@@ -61,3 +61,44 @@ class EmailInputField extends StatelessWidget {
     );
   }
 }
+
+
+
+class PasswordInputField extends StatelessWidget {
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final String? errorText;
+  final String hintText;
+
+  const PasswordInputField({
+    Key? key,
+    required this.controller,
+    required this.focusNode,
+    this.errorText,
+    this.hintText = 'Password',
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 21.0),
+        child: Container(
+          child: TextFormField(
+            controller: controller,
+            focusNode: focusNode,
+            decoration: InputDecoration(
+              hintText: hintText,
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.lock),
+              errorText: errorText,
+              errorStyle: TextStyle(color: Colors.red),
+            ),
+            obscureText: true, // Ukrycie tekstu (dla haseł)
+          ),
+        ),
+      ),
+    );
+  }
+}

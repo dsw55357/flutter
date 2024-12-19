@@ -182,7 +182,9 @@ class _LoginViewState extends State<LoginView> {
                 ),
 
                 SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+
                 // Drugie pole
+                /*
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -205,7 +207,13 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
+                ),*/
+                PasswordInputField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocus,
+                  errorText: _passwordError,
                 ),
+
 
                 Align(
                   alignment: Alignment.centerRight,
