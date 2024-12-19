@@ -224,7 +224,7 @@ class _LoginViewState extends State<LoginView> {
                   onToggleVisibility: _togglePasswordVisibility,
                 ),
 
-
+/*
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
@@ -237,7 +237,17 @@ class _LoginViewState extends State<LoginView> {
                         )),
                   ),
                 ),
-
+ */
+                ForgetPasswordText(
+                  onTap: () {
+                    print('Navigate to reset password screen');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterView()),
+                    );
+                  },
+                ),
+/*
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -259,6 +269,12 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
+                */
+                LoginButton(
+                  text: 'Zaloguj się',
+                  onPressed: _validateOnSubmit,
+                ),
+
               ],
             ),
           ),

@@ -112,3 +112,81 @@ class PasswordInputField extends StatelessWidget {
     );
   }
 }
+
+class ForgetPasswordText extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final VoidCallback? onTap;
+
+  const ForgetPasswordText({
+    Key? key,
+    this.text = 'Forget Password?',
+    this.style,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 21.0, top: 16),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Text(
+            text,
+            style: style ??
+                TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.purple, // Możesz dostosować kolor
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class LoginButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Color backgroundColor;
+  final Color textColor;
+  final double borderRadius;
+  final Size minimumSize;
+
+  const LoginButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.backgroundColor = Colors.purple,
+    this.textColor = Colors.white,
+    this.borderRadius = 15.0,
+    this.minimumSize = const Size(390, 50),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor,
+            minimumSize: minimumSize,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+          ),
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: TextStyle(color: textColor),
+          ),
+        ),
+      ),
+    );
+  }
+}
