@@ -23,6 +23,14 @@ class _LoginViewState extends State<LoginView> {
   String? _emailError = '.';
   String? _passwordError = '.';
 
+  bool _obscureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   void _validateEmail() {
     final email = _emailController.text;
       // Sprawdzenie e-maila
@@ -212,6 +220,8 @@ class _LoginViewState extends State<LoginView> {
                   controller: _passwordController,
                   focusNode: _passwordFocus,
                   errorText: _passwordError,
+                  obscureText: _obscureText,
+                  onToggleVisibility: _togglePasswordVisibility,
                 ),
 
 

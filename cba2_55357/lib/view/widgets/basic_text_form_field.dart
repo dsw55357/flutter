@@ -63,12 +63,14 @@ class EmailInputField extends StatelessWidget {
 }
 
 
-
 class PasswordInputField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final String? errorText;
   final String hintText;
+
+  final bool obscureText;
+  final VoidCallback? onToggleVisibility; // Zmieniono na opcjonalny
 
   const PasswordInputField({
     Key? key,
@@ -76,6 +78,8 @@ class PasswordInputField extends StatelessWidget {
     required this.focusNode,
     this.errorText,
     this.hintText = 'Password',
+    this.obscureText=true,
+    this.onToggleVisibility,
   }) : super(key: key);
 
   @override
@@ -88,14 +92,20 @@ class PasswordInputField extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             focusNode: focusNode,
+            obscureText: obscureText, // Ukrycie tekstu (dla haseł)
             decoration: InputDecoration(
               hintText: hintText,
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.lock),
               errorText: errorText,
               errorStyle: TextStyle(color: Colors.red),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: onToggleVisibility,
+              ),
             ),
-            obscureText: true, // Ukrycie tekstu (dla haseł)
           ),
         ),
       ),
