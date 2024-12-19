@@ -145,11 +145,11 @@ class _LoginViewState extends State<LoginView> {
                         )),
                   ),
                 ), */
+
                 SignInHeader(),
 
 
                 SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
-
 
                 /*
                 Align(
@@ -174,7 +174,13 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
-*/
+                  */
+              EmailInputField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  errorText: _emailError,
+                ),
+
                 SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
                 // Drugie pole
                 Align(
