@@ -5,6 +5,8 @@ import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/basic_text_form_field.dart';
+
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -128,9 +130,9 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 const SizedBox(height: 62), // Przestrzeń od góry
                 Image.asset(MyImages.logo),
-                // const przyswpiesz kompilację
+                // const
                 const SizedBox(height: 21), // Odstęp między grafiką a tekstem
-
+                /*
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -142,10 +144,14 @@ class _LoginViewState extends State<LoginView> {
                           color: MyColors.purleColor,
                         )),
                   ),
-                ),
+                ), */
+                SignInHeader(),
+
 
                 SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
 
+
+                /*
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -168,6 +174,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
+*/
                 SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
                 // Drugie pole
                 Align(
