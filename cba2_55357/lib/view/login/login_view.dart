@@ -71,7 +71,13 @@ class _LoginViewState extends State<LoginView> {
   //void _validateOnSubmit() {
   Future<void> _validateOnSubmit() async {
     setState(() {
-    if(_passwordError==null && _emailError == null) {
+      _emailError = null;
+      _passwordError = null;
+
+      _validateEmail();
+      _validatePassword();
+
+      if(_passwordError==null && _emailError == null) {
       print("submit...");
       Navigator.push(
         context,
