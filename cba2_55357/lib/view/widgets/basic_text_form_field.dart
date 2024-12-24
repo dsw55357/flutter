@@ -192,10 +192,21 @@ class LoginButton extends StatelessWidget {
 }
 
 
-class SignUpPrompt extends StatelessWidget {
-  final VoidCallback onSignUpTap;
+class ActionPrompt extends StatelessWidget {
+  final VoidCallback onActionTap;
+  final String promptText;
+  final String actionText;
+  final Color promptColor;
+  final Color actionColor;
 
-  const SignUpPrompt({Key? key, required this.onSignUpTap}) : super(key: key);
+  const ActionPrompt({
+    Key? key,
+    required this.promptText,
+    required this.actionText,
+    required this.onActionTap,
+    this.promptColor = Colors.black, // Domyślny kolor dla promptText
+    this.actionColor = Colors.blue, // Domyślny kolor dla actionText
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -203,16 +214,16 @@ class SignUpPrompt extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Don’t have an account?",
-          style: TextStyle(color: MyColors.purleColor, fontSize: 14),
+          this.promptText,
+          style: TextStyle(color: promptColor, fontSize: 14),
         ),
         SizedBox(width: 5), // Odstęp między tekstami
         GestureDetector(
-          onTap: onSignUpTap,
+          onTap: onActionTap,
           child: Text(
-            "Sign Up",
+            this.actionText,
             style: TextStyle(
-              color: MyColors.purleColor,
+              color: actionColor,
               fontSize: 14,
               fontWeight: FontWeight.bold, // Pogrubienie tekstu
             ),

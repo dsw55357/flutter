@@ -5,7 +5,6 @@ import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../widgets/basic_text_form_field.dart';
 
 
@@ -283,16 +282,19 @@ class _LoginViewState extends State<LoginView> {
                 ),
 
                 Spacer(),
-
                 Padding(
                   padding: const EdgeInsets.only(bottom: 62),
-                  child: SignUpPrompt(
-                    onSignUpTap: () {
+                  child: ActionPrompt(
+                      promptText: "Don’t have an account?", // Tekst pytania
+                      actionText: "Sign Up",                // Tekst akcji
+                      onActionTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterView()),
                       );
                     },
+                    promptColor: MyColors.purleColor, // Kolor pytania (opcjonalnie)
+                    actionColor: MyColors.purleColor, // Kolor akcji (opcjonalnie)
                   ),
                 ),
 
