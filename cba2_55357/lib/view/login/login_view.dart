@@ -2,6 +2,7 @@ import 'package:cba2_55357/utils/my_colors.dart';
 import 'package:cba2_55357/utils/my_images.dart';
 import 'package:cba2_55357/view/home/home.dart';
 import 'package:cba2_55357/view/register/register_view.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -280,6 +281,40 @@ class _LoginViewState extends State<LoginView> {
                   text: 'Zaloguj się',
                   onPressed: _validateOnSubmit,
                 ),
+
+                Spacer(),
+                Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 62),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don’t have an account?",
+                          style: TextStyle(color: MyColors.purleColor, fontSize: 14),
+                        ),
+                        SizedBox(width: 5), // Odstęp między tekstami
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterView()),
+                            );
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: MyColors.purleColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold, // Pogrubienie tekstu
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
 
               ],
             ),
