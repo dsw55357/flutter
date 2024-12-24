@@ -283,6 +283,20 @@ class _LoginViewState extends State<LoginView> {
                 ),
 
                 Spacer(),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 62),
+                  child: SignUpPrompt(
+                    onSignUpTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterView()),
+                      );
+                    },
+                  ),
+                ),
+
+/*
                 Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(bottom: 62),
@@ -313,7 +327,7 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                   ),
-
+*/
 
 
               ],

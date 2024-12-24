@@ -139,7 +139,7 @@ class ForgetPasswordText extends StatelessWidget {
                 TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: Colors.purple, // Możesz dostosować kolor
+                  color: MyColors.purleColor, // Możesz dostosować kolor
                 ),
           ),
         ),
@@ -187,6 +187,38 @@ class LoginButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+class SignUpPrompt extends StatelessWidget {
+  final VoidCallback onSignUpTap;
+
+  const SignUpPrompt({Key? key, required this.onSignUpTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Don’t have an account?",
+          style: TextStyle(color: MyColors.purleColor, fontSize: 14),
+        ),
+        SizedBox(width: 5), // Odstęp między tekstami
+        GestureDetector(
+          onTap: onSignUpTap,
+          child: Text(
+            "Sign Up",
+            style: TextStyle(
+              color: MyColors.purleColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold, // Pogrubienie tekstu
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
