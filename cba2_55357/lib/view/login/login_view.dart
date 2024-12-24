@@ -278,7 +278,7 @@ class _LoginViewState extends State<LoginView> {
                 */
                 LoginButton(
                   text: 'Zaloguj się',
-                  onPressed: _validateOnSubmit,
+                  onPressed: _validateOnSubmit, backgroundColor: MyColors.purle2Color
                 ),
 
                 Spacer(),
