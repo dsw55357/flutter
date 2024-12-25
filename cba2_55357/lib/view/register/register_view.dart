@@ -59,7 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
                   errorText: _nameError,
                   hintText: "Full Name"
               ),
-              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
               EmailInputField(
                 controller: _emailController,
@@ -68,7 +68,7 @@ class _RegisterViewState extends State<RegisterView> {
                 hintText: "Email",
                 prefixIcon: Icon(Icons.email), // Można użyć dowolnej ikony
               ),
-              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
               PasswordInputField(
                 controller: _passwordController,
@@ -77,7 +77,7 @@ class _RegisterViewState extends State<RegisterView> {
                 obscureText: _obscureText,
                 onToggleVisibility: _togglePasswordVisibility,
               ),
-              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
               PasswordInputField(
                 controller: _passwordController,
@@ -88,6 +88,7 @@ class _RegisterViewState extends State<RegisterView> {
                   hintText: "Confirm Password"
               ),
 
+              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
               LoginButton(
                   text: 'Sign Up',

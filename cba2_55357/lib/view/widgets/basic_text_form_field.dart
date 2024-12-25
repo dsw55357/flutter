@@ -52,7 +52,10 @@ class EmailInputField extends StatelessWidget {
             focusNode: focusNode,
             decoration: InputDecoration(
               hintText: hintText,
-              border: OutlineInputBorder(),
+              //border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0), // Zaokrąglenie narożników
+              ),
               //prefixIcon: Icon(Icons.person),
               prefixIcon: prefixIcon ?? Icon(Icons.person), // Ustawienie domyślnej ikony
               errorText: errorText,
@@ -98,7 +101,10 @@ class PasswordInputField extends StatelessWidget {
             obscureText: obscureText, // Ukrycie tekstu (dla haseł)
             decoration: InputDecoration(
               hintText: hintText,
-              border: OutlineInputBorder(),
+              //border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0), // Zaokrąglenie narożników
+              ),
               prefixIcon: Icon(Icons.lock),
               errorText: errorText,
               errorStyle: TextStyle(color: Colors.red),
