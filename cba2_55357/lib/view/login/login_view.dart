@@ -5,6 +5,8 @@ import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+import '../../utils/database_helper.dart';
 import '../widgets/basic_text_form_field.dart';
 
 
@@ -57,8 +59,7 @@ class _LoginViewState extends State<LoginView> {
       } else {
         _passwordError = null;
       }
-  });
-
+    });
   }
 
   Future<void> _isLoggedIn() async {
@@ -68,27 +69,58 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
+  void printDatabasePath() async {
+    String dbPath = await getDatabasesPath();
+    print('Database path: $dbPath');
+  }
+
   //void _validateOnSubmit() {
   Future<void> _validateOnSubmit() async {
-    setState(() {
-      _emailError = null;
-      _passwordError = null;
+    printDatabasePath();
 
-      _validateEmail();
-      _validatePassword();
+    final email = _emailController.text;
+    final password = _passwordController.text;
 
-      if(_passwordError==null && _emailError == null) {
-      print("submit...");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const HomeView()),
-      );
+    try {
+      final isAuthenticated = await DatabaseHelper.instance.loginUser(email, password);
 
-      // Jeśli walidacja się powiedzie, zapisujemy isLoggedIn = true
-      _isLoggedIn();
+      if (isAuthenticated) {
+        print("użytkownik został uwierzytelniony...");
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login successful')),
+        );
+
+        setState(() {
+          _emailError = null;
+          _passwordError = null;
+
+          _validateEmail();
+          _validatePassword();
+
+          if(_passwordError==null && _emailError == null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const HomeView()),
+            );
+            // Jeśli walidacja się powiedzie, zapisujemy isLoggedIn = true
+            _isLoggedIn();
+          }
+        });
+
+      } else {
+        print("..użytkownik podał nieprawidłowe dane");
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Invalid credentials')),
+        );
+      }
     }
-    });
+    catch (e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: ${e.toString()}')),
+       );
+    }
   }
 
   @override

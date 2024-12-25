@@ -29,6 +29,7 @@ class EmailInputField extends StatelessWidget {
   final FocusNode focusNode;
   final String? errorText;
   final String hintText;
+  final Widget? prefixIcon; // Dodanie zmiennej prefixIcon
 
   const EmailInputField({
     Key? key,
@@ -36,6 +37,7 @@ class EmailInputField extends StatelessWidget {
     required this.focusNode,
     this.errorText,
     this.hintText = 'Email or User name',
+    this.prefixIcon, // Dodanie prefixIcon do konstruktora
   }) : super(key: key);
 
   @override
@@ -51,7 +53,8 @@ class EmailInputField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.person),
+              //prefixIcon: Icon(Icons.person),
+              prefixIcon: prefixIcon ?? Icon(Icons.person), // Ustawienie domyślnej ikony
               errorText: errorText,
             ),
             keyboardType: TextInputType.emailAddress,

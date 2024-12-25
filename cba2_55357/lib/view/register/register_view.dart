@@ -6,8 +6,39 @@ import '../widgets/basic_text_form_field.dart';
 
 
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
+
   const RegisterView({super.key});
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _nameController = TextEditingController();
+  final FocusNode _nameFocus = FocusNode();
+  String? _nameError = '.';
+
+  final TextEditingController _emailController = TextEditingController();
+  final FocusNode _emailFocus = FocusNode();
+  String? _emailError = '.';
+
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _passwordFocus = FocusNode();
+  String? _passwordError = '.';
+
+  bool _obscureText = true;
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  Future<void> _validate() async {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +49,53 @@ class RegisterView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Spacer(),
+              const SizedBox(height: 62), // Przestrzeń od góry
+              SignInHeader(),
+              SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
 
+              EmailInputField(
+                  controller: _nameController,
+                  focusNode: _nameFocus,
+                  errorText: _nameError,
+                  hintText: "Full Name"
+              ),
+              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+
+              EmailInputField(
+                controller: _emailController,
+                focusNode: _emailFocus,
+                errorText: _emailError,
+                hintText: "Email",
+                prefixIcon: Icon(Icons.email), // Można użyć dowolnej ikony
+              ),
+              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+
+              PasswordInputField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                errorText: _passwordError,
+                obscureText: _obscureText,
+                onToggleVisibility: _togglePasswordVisibility,
+              ),
+              SizedBox(height: 16), // Odstęp między pierwszym a drugim polem
+
+              PasswordInputField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                errorText: _passwordError,
+                obscureText: _obscureText,
+                onToggleVisibility: _togglePasswordVisibility,
+                  hintText: "Confirm Password"
+              ),
+
+
+              LoginButton(
+                  text: 'Sign Up',
+                  onPressed: _validate, backgroundColor: MyColors.purle2Color
+              ),
+
+
+              Spacer(),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
