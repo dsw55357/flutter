@@ -1,7 +1,7 @@
-# Sprawozdanie z projektu Flutter: CBA2_55357
+# Sprawozdanie z projektu Flutter: 
 
 ## **Informacje ogólne**
-**Nazwa projektu**: Flutter - CBA2_55357  
+**Nazwa projektu**: Programowanie aplikacji mobilnych   
 **Repozytorium**: [GitHub Repository](https://github.com/dsw55357/flutter/tree/main/cba2_55357)  
 **Autor**: dsw55357  
 **Technologia**: Flutter - Framework do tworzenia aplikacji mobilnych, webowych i desktopowych.  
