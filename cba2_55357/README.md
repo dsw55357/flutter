@@ -1,4 +1,4 @@
-# Sprawozdanie z projektu Flutter: 
+# Sprawozdanie z projektu: 
 
 ## **Informacje ogólne**
 **Nazwa projektu**: Programowanie aplikacji mobilnych   
@@ -80,5 +80,5 @@ Z analizowanego repozytorium wynika, że projekt koncentruje się na:
    - Dodanie testów dla kluczowych funkcji aplikacji, np. walidacji danych w formularzu.
 
 ## **Podsumowanie**
-Projekt **CBA2_55357** wprowadza podstawową aplikację mobilną z wykorzystaniem Fluttera. Kluczowym aspektem projektu jest dobre zrozumienie podstaw Fluttera i jego możliwości w zakresie budowy interfejsu użytkownika oraz logiki aplikacji. Repozytorium jest dobrym punktem wyjścia do rozwijania bardziej złożonych aplikacji.
+Projekt wprowadza w podstawową aplikację mobilną z wykorzystaniem Fluttera. Kluczowym aspektem projektu jest dobre zrozumienie podstaw Fluttera i jego możliwości w zakresie budowy interfejsu użytkownika oraz logiki aplikacji. Repozytorium jest dobrym punktem wyjścia do rozwijania bardziej złożonych aplikacji.
 
