@@ -1,6 +1,7 @@
 // material - tylko android
 import 'package:flutter/material.dart';
 import '../../utils/my_colors.dart';
+import '../../utils/my_images.dart';
 import '../login/login_view.dart';
 import '../widgets/basic_text_form_field.dart';
 
@@ -49,6 +50,30 @@ class _RegisterViewState extends State<RegisterView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              const SizedBox(height: 59), // Przestrzeń
+              Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                child: SizedBox(
+                  height: 20,
+                  child: Row(
+                  children: [
+                    Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                        child: Image.asset(MyImages.back),
+                    ),
+                    Text(
+                      "Back",
+                      style: TextStyle(color: MyColors.purleColor, fontSize: 12),
+                    ),
+                  ],
+                )),
+                ),
+              ),
+
               const SizedBox(height: 62), // Przestrzeń od góry
               SignInHeader(),
               SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym

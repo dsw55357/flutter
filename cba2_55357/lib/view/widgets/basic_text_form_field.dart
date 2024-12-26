@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cba2_55357/utils/my_colors.dart';
 
+import '../../utils/my_images.dart';
+
 class SignInHeader extends StatelessWidget {
   const SignInHeader({Key? key}) : super(key: key);
 
@@ -242,3 +244,54 @@ class ActionPrompt extends StatelessWidget {
     );
   }
 }
+
+
+class CustomBackButton extends StatelessWidget {
+  final String imagePath;
+  final double width;
+  final double height;
+  final double top;
+  final double left;
+  final double opacity;
+
+  const CustomBackButton({
+    Key? key,
+    this.imagePath = MyImages.back,
+    this.width = 48.0,
+    this.height = 20.0,
+    this.top = 59.0,
+    this.left = 12.0,
+    this.opacity = 0.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: opacity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8.0,), // Odstęp między obrazkiem a tekstem
+          Text(
+            "Back",
+            style: TextStyle(fontSize: 16.0, color: MyColors.purleColor),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
