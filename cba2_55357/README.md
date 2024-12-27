@@ -10,28 +10,50 @@
 Celem projektu było opracowanie aplikacji mobilnej w Flutterze, która demonstruje określone funkcjonalności. Możliwe aspekty do zaimplementowania obejmują obsługę interfejsu użytkownika, logikę biznesową oraz integrację z usługami backendowymi.
 
 ## **Funkcjonalności**
-Z analizowanego repozytorium wynika, że projekt koncentruje się na:
-1. **Tworzeniu interfejsu użytkownika**:
-   - Wykorzystanie komponentów Flutter takich jak **TextFormField**, **Buttons**, czy **Icons**.
-   - Projektowanie responsywnych ekranów.
+### Tworzenie interfejsu użytkownika
+- Dynamiczne formularze z obsługą pól tekstowych:
+  - Wykorzystanie `TextFormField` dla pól wejściowych.
+  - Dodanie dekoracji (ikony, zaokrąglenia) i walidacji danych.
+- Responsywne widżety, takie jak `CustomBackButton` i `SignInHeader`.
+- Obsługa wizualna przycisków (`LoginButton` i `ActionPrompt`) z kolorami definiowanymi w `MyColors`.
 
-2. **Formularze**:
-   - Obsługa pól wejściowych dla danych takich jak e-mail i hasło.
-   - Walidacja danych wejściowych.
+### Formularze
+- **Rejestracja**:
+  - Pola dla imienia, adresu e-mail, hasła i potwierdzenia hasła.
+  - Walidacja:
+    - Sprawdzenie pustych pól.
+    - Minimalna długość hasła (8 znaków).
+    - Sprawdzenie zgodności hasła z potwierdzeniem.
+- **Logowanie**:
+  - Walidacja adresu e-mail i hasła.
+  - Obsługa komunikatów o błędach dla niepoprawnych danych.
 
-3. **Logika aplikacji**:
-   - Implementacja podstawowej logiki nawigacji między ekranami.
-   - Zarządzanie stanem aplikacji.
+### Logika aplikacji
+- **Nawigacja**:
+  - Przechodzenie między ekranami rejestracji, logowania i ekranu głównego.
+  - Obsługa powrotu do poprzedniego ekranu za pomocą `Navigator.canPop`.
+  - Automatyczne przekierowanie na ekran główny po zalogowaniu.
+- **Zarządzanie stanem**:
+  - Ustawienie flagi `isLoggedIn` w `SharedPreferences` po zalogowaniu użytkownika.
+  - Wylogowanie użytkownika i usunięcie flagi.
 
-4. **Integracja wizualna**:
-   - Użycie widgetów dekoracyjnych takich jak **OutlineInputBorder** i **Icons**.
-   - Personalizacja elementów UI, w tym obsługa stylów, kolorów i zaokrągleń.
+### Integracja z SQLite
+- **Baza danych**:
+  - Tabela `users` przechowująca informacje o użytkownikach: `name`, `email`, `password`.
+  - Zabezpieczenie hasła poprzez hashowanie z użyciem biblioteki `crypto`.
+- **Funkcjonalności**:
+  - Rejestracja użytkownika:
+    - Dodanie nowego rekordu do tabeli `users`.
+    - Obsługa duplikatów adresów e-mail.
+  - Logowanie użytkownika:
+    - Weryfikacja poświadczeń w bazie danych.
+    - Obsługa błędów przy niepoprawnych danych.
+
 
 ## **Główne komponenty projektu**
 ### 1. **Formularz logowania**
-   - Wykorzystanie **TextFormField** z dekoracją oraz walidacją:
-     - **HintText** i **LabelText** dla wskazówek dla użytkownika.
-     - **PrefixIcon** dla wizualnego wsparcia wprowadzania danych (np. ikona e-mail).
+   - Pole e-mail z walidacją
+   - Pole hasła z możliwością ukrycia/odsłonięcia
    
    ```dart
    TextFormField(
@@ -45,12 +67,34 @@ Z analizowanego repozytorium wynika, że projekt koncentruje się na:
      keyboardType: TextInputType.emailAddress,
    );
    ```
-
-### 2. **Nawigacja między ekranami**
+### 2. **Formularz rejestracji**
+   - Dynamicznie generowane pola na podstawie listy FormFieldData:
+   ```dart
+      final List<FormFieldData> _formFields = [
+      FormFieldData(name: 'name', controller: TextEditingController(), ...),
+      FormFieldData(name: 'email', controller: TextEditingController(), ...),
+      FormFieldData(name: 'password', controller: TextEditingController(), ...),
+      FormFieldData(name: 'passwordCon', controller: TextEditingController(), ...),
+      ];
+   ```
+### 3. **Nawigacja między ekranami**
    - Obsługa nawigacji za pomocą **Navigator.push()** i **Navigator.pop()**.
    - Tworzenie zorganizowanej struktury aplikacji z oddzielnymi ekranami.
 
-### 3. **Zarządzanie stanem**
+### 4. **Wylogowanie użytkownika**
+   ```dart
+   Future<void> _logout(BuildContext context) async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   await prefs.remove('isLoggedIn');
+   Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginView()),
+   );
+   }
+   ```
+
+
+### 5. **Zarządzanie stanem**
    - Proste zarządzanie stanem dla kontroli interakcji użytkownika.
    - Wykorzystanie **TextEditingController** do obsługi danych wprowadzanych w formularzu.
 
@@ -58,26 +102,34 @@ Z analizowanego repozytorium wynika, że projekt koncentruje się na:
 - **Główne pliki i katalogi**:
   - `lib/`: Zawiera główną logikę aplikacji Flutter.
   - `main.dart`: Punkt wejścia aplikacji.
-  - Dodatkowe pliki zawierające widoki, komponenty UI i logikę biznesową.
+  - `view/`: Widoki aplikacji (logowanie, rejestracja, ekran główny).
+  - `utils/`: Narzędzia pomocnicze, takie jak kolory (MyColors) i obrazy (MyImages).
+  - `widgets/`: Niestandardowe widżety, takie jak LoginButton i CustomBackButton.
+  - `utils/database_helper.dart`: Klasa zarządzająca bazą danych SQLite.
 
-## **Wykorzystane narzędzia i technologie**
+## **Użyte technologie**
 - **Flutter SDK**: Framework do budowy aplikacji wieloplatformowych.
 - **Dart**: Język programowania używany w Flutterze.
 - **Pub.dev**: Użycie zależności (np. `flutter_form_builder` lub `provider`, jeśli są używane).
+- **SQLite**: Lokalne zarządzanie bazą danych.
+- **crypto**: Zabezpieczenie haseł użytkowników poprzez hashowanie.
+- **SharedPreferences**: Przechowywanie flagi isLoggedIn.
+
 
 ## **Możliwe ulepszenia**
 1. **Rozszerzenie funkcjonalności UI**:
    - Dodanie efektów animacji, np. przy przejściu między ekranami.
-   - Lepsze dostosowanie aplikacji do urządzeń o różnych rozdzielczościach.
 
 2. **Poprawa walidacji danych**:
    - Dodanie bardziej zaawansowanych reguł walidacji (np. sprawdzanie siły hasła).
 
-3. **Integracja z backendem**:
-   - Podłączenie aplikacji do API, np. dla autoryzacji użytkownika.
+3. **Integracja z backendem:**:
+   - Synchronizacja danych z serwerem.
 
 4. **Testy jednostkowe**:
    - Dodanie testów dla kluczowych funkcji aplikacji, np. walidacji danych w formularzu.
+5. **Rozszerzenie bazy danych**:
+   - Dodanie dodatkowych kolumn, takich jak created_at i updated_at.
 
 ## **Podsumowanie**
 Projekt wprowadza w podstawową aplikację mobilną z wykorzystaniem Fluttera. Kluczowym aspektem projektu jest dobre zrozumienie podstaw Fluttera i jego możliwości w zakresie budowy interfejsu użytkownika oraz logiki aplikacji. Repozytorium jest dobrym punktem wyjścia do rozwijania bardziej złożonych aplikacji.
