@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cba2_55357/utils/my_colors.dart';
 
 import '../../utils/my_images.dart';
+import '../login/login_view.dart';
 
 class SignInHeader extends StatelessWidget {
   const SignInHeader({Key? key}) : super(key: key);
@@ -262,8 +263,13 @@ class CustomBackButton extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop();
+        onTap: () { //ale czy istnieje wcześniejszy ekran w stosie nawigacyjnym
+          // czy istnieje wcześniejszy ekran w stosie nawigacyjnym
+          if(Navigator.canPop(context)) {
+            Navigator.of(context).pop();
+          } else {
+            MaterialPageRoute(builder: (context) => LoginView());
+          }
         },
         child: SizedBox(
           height: 20,

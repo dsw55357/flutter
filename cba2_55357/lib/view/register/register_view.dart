@@ -145,26 +145,26 @@ class _RegisterViewState extends State<RegisterView> {
     _formFields.addAll([
       FormFieldData(
         name: 'name',
-        controller: TextEditingController(),
+        controller: TextEditingController(text: ''),
         focusNode: FocusNode(),
         hintText: 'Full Name',
       ),
       FormFieldData(
         name: 'email',
-        controller: TextEditingController(),
+        controller: TextEditingController(text: ''),
         focusNode: FocusNode(),
         hintText: 'Email',
         prefixIcon: Icon(Icons.email),
       ),
       FormFieldData(
         name: 'password',
-        controller: TextEditingController(),
+        controller: TextEditingController(text: ''),
         focusNode: FocusNode(),
         hintText: 'Password',
       ),
       FormFieldData(
         name: 'passwordCon',
-        controller: TextEditingController(),
+        controller: TextEditingController(text: ''),
         focusNode: FocusNode(),
         hintText: 'Confirm Password',
       ),

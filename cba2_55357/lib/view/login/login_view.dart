@@ -18,8 +18,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: '');
+  final TextEditingController _passwordController = TextEditingController(text: '');
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
   String? _emailError = '.';
@@ -140,6 +140,13 @@ class _LoginViewState extends State<LoginView> {
     _emailController.dispose();
     _emailFocus.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _emailController.clear();
+    _passwordController.clear();
   }
 
   @override
