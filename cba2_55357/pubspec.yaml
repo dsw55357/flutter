@@ -17,6 +17,8 @@ dependencies:
   very_good_analysis: 6.0.0
   shared_preferences: ^2.2.0
   sqflite:
+  crypto: ^3.0.0
+
 
   cupertino_icons: ^1.0.8
 

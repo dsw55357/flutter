@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:crypto/crypto.dart';
+
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -25,22 +29,57 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL
       )
     ''');
   }
 
+  String hashPassword(String password) {
+    return sha256.convert(utf8.encode(password)).toString();
+  }
+
+  Future<int> registerUser(String name, String email, String password) async {
+    final db = await database;
+
+    try {
+      final hashedPassword = hashPassword(password);
+      return await db.insert(
+        'users',
+        {
+          'name': name,
+          'email': email,
+          'password': hashedPassword,
+        },
+        conflictAlgorithm: ConflictAlgorithm.abort,
+      );
+    } catch (e) {
+      return -1; // Indicate failure, e.g., duplicate email
+    }
+  }
+
   Future<bool> loginUser(String email, String password) async {
-    final db = await DatabaseHelper.instance.database;
+    //final db = await DatabaseHelper.instance.database;
+    final db = await database;
+
+    final hashedPassword = hashPassword(password);
 
     final user = await db.query(
       'users',
       where: 'email = ? AND password = ?',
-      whereArgs: [email, password],
+      whereArgs: [email, hashedPassword],
     );
 
     return user.isNotEmpty;
+  }
+
+  Future close() async {
+    final db = await _database;
+    if (db != null) {
+      await db.close();
+      _database = null;
+    }
   }
 
 }

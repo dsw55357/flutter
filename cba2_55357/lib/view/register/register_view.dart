@@ -1,7 +1,9 @@
 // material - tylko android
+import 'package:cba2_55357/utils/database_helper.dart';
 import 'package:flutter/material.dart';
 import '../../utils/my_colors.dart';
 import '../../utils/my_images.dart';
+import '../home/home.dart';
 import '../login/login_view.dart';
 import '../widgets/basic_text_form_field.dart';
 
@@ -67,13 +69,18 @@ class _RegisterViewState extends State<RegisterView> {
       return '${field.hintText} nie może być pusty';
     }
 
+    if(field.name == 'password') {
+      if(value.length < 8) {
+        return 'Password must be at least 8 characters long';
+      }
+    }
+
     if(field.name == 'passwordCon') {
       final password = _formFields.firstWhere((f) => f.name == 'password').controller.text; // warunek, który sprawdza, czy nazwa pola to 'password'
       if (value!= password) {
         return 'Passwords do not match';
       }
     }
-
     return null;
   }
 
@@ -88,10 +95,38 @@ class _RegisterViewState extends State<RegisterView> {
 
     if(_formFields.every((field) => field.error == null)) {
       print('Form is valid');
+      // zapisujemy zatem dane do bazy
+      // Wydobycie danych z pól
+      final name = _formFields.firstWhere((f) => f.name == 'name').controller.text;
+      final email = _formFields.firstWhere((f) => f.name == 'email').controller.text;
+      final password = _formFields.firstWhere((f) => f.name == 'password').controller.text;
+
+      _registerUser(name, email, password);
+
     } else {
       print('Form contains errors');
     }
   }
+
+  void _registerUser(String name, String email, String password) async {
+    final result = await DatabaseHelper.instance.registerUser(name, email, password);
+
+    if(result != -1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User registered successfully $name, $email, $password')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const HomeView()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration failed')),
+      );
+    }
+  }
+
 
   @override
   void dispose() {
