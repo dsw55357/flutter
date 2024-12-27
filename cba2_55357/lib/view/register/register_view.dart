@@ -10,12 +10,16 @@ class FormFieldData {
   final TextEditingController controller;
   final FocusNode focusNode;
   String? error;
+  final String hintText;
+  final Widget? prefixIcon;
 
   FormFieldData({
     required this.name,
     required this.controller,
     required this.focusNode,
     this.error,
+    required this.hintText,
+    this.prefixIcon,
   });
 }
 
@@ -46,28 +50,7 @@ class _RegisterViewState extends State<RegisterView> {
   final FocusNode _passwordConFocus = FocusNode();
   String? _passwordConError = '.';*/
 
-  final List<FormFieldData> _formFields = [
-    FormFieldData(
-      name: 'name',
-      controller: TextEditingController(),
-      focusNode: FocusNode(),
-    ),
-    FormFieldData(
-      name: 'email',
-      controller: TextEditingController(),
-      focusNode: FocusNode(),
-    ),
-    FormFieldData(
-      name: 'password',
-      controller: TextEditingController(),
-      focusNode: FocusNode(),
-    ),
-    FormFieldData(
-      name: 'passwordCon',
-      controller: TextEditingController(),
-      focusNode: FocusNode(),
-    ),
-  ];
+  final List<FormFieldData> _formFields = [];
 
   bool _obscureText = true;
   void _togglePasswordVisibility() {
@@ -94,6 +77,33 @@ class _RegisterViewState extends State<RegisterView> {
   void initState() {
     super.initState();
 
+    _formFields.addAll([
+      FormFieldData(
+        name: 'name',
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+        hintText: 'Full Name',
+      ),
+      FormFieldData(
+        name: 'email',
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+        hintText: 'Email',
+        prefixIcon: Icon(Icons.email),
+      ),
+      FormFieldData(
+        name: 'password',
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+        hintText: 'Password',
+      ),
+      FormFieldData(
+        name: 'passwordCon',
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+        hintText: 'Confirm Password',
+      ),
+    ]);
 
   }
 
@@ -114,41 +124,68 @@ class _RegisterViewState extends State<RegisterView> {
               SignInHeader(),
               SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
 
-              EmailInputField(
+/*              EmailInputField(
                   controller: _nameController,
                   focusNode: _nameFocus,
                   errorText: _nameError,
                   hintText: "Full Name"
+              ),*/
+              EmailInputField(
+                controller: _formFields[0].controller,
+                focusNode: _formFields[0].focusNode,
+                errorText: _formFields[0].error,
+                hintText: _formFields[0].hintText,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
-              EmailInputField(
+/*              EmailInputField(
                 controller: _emailController,
                 focusNode: _emailFocus,
                 errorText: _emailError,
                 hintText: "Email",
                 prefixIcon: Icon(Icons.email), // Można użyć dowolnej ikony
-              ),
-              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
-
+              ),*/
               PasswordInputField(
-                controller: _passwordController,
-                focusNode: _passwordFocus,
-                errorText: _passwordError,
+                controller: _formFields[2].controller,
+                focusNode: _formFields[2].focusNode,
+                errorText: _formFields[2].error,
                 obscureText: _obscureText,
                 onToggleVisibility: _togglePasswordVisibility,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
+/*              PasswordInputField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                errorText: _passwordError,
+                obscureText: _obscureText,
+                onToggleVisibility: _togglePasswordVisibility,
+              ),*/
               PasswordInputField(
+                controller: _formFields[2].controller,
+                focusNode: _formFields[2].focusNode,
+                errorText: _formFields[2].error,
+                obscureText: _obscureText,
+                onToggleVisibility: _togglePasswordVisibility,
+              ),
+              SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
+
+/*              PasswordInputField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 errorText: _passwordError,
                 obscureText: _obscureText,
                 onToggleVisibility: _togglePasswordVisibility,
                   hintText: "Confirm Password"
+              ),*/
+              PasswordInputField(
+                controller: _formFields[3].controller,
+                focusNode: _formFields[3].focusNode,
+                errorText: _formFields[3].error,
+                obscureText: _obscureText,
+                onToggleVisibility: _togglePasswordVisibility,
+                hintText: _formFields[3].hintText,
               ),
-
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 
               LoginButton(
