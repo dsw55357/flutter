@@ -5,7 +5,19 @@ import '../../utils/my_images.dart';
 import '../login/login_view.dart';
 import '../widgets/basic_text_form_field.dart';
 
+class FormFieldData {
+  final String name;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  String? error;
 
+  FormFieldData({
+    required this.name,
+    required this.controller,
+    required this.focusNode,
+    this.error,
+  });
+}
 
 class RegisterView extends StatefulWidget {
 
@@ -18,7 +30,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameController = TextEditingController();
+  /*final TextEditingController _nameController = TextEditingController();
   final FocusNode _nameFocus = FocusNode();
   String? _nameError = '.';
 
@@ -30,6 +42,33 @@ class _RegisterViewState extends State<RegisterView> {
   final FocusNode _passwordFocus = FocusNode();
   String? _passwordError = '.';
 
+  final TextEditingController _passwordConController = TextEditingController();
+  final FocusNode _passwordConFocus = FocusNode();
+  String? _passwordConError = '.';*/
+
+  final List<FormFieldData> _formFields = [
+    FormFieldData(
+      name: 'name',
+      controller: TextEditingController(),
+      focusNode: FocusNode(),
+    ),
+    FormFieldData(
+      name: 'email',
+      controller: TextEditingController(),
+      focusNode: FocusNode(),
+    ),
+    FormFieldData(
+      name: 'password',
+      controller: TextEditingController(),
+      focusNode: FocusNode(),
+    ),
+    FormFieldData(
+      name: 'passwordCon',
+      controller: TextEditingController(),
+      focusNode: FocusNode(),
+    ),
+  ];
+
   bool _obscureText = true;
   void _togglePasswordVisibility() {
     setState(() {
@@ -38,8 +77,26 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Future<void> _validate() async {
+    print('analiza pól przed zapisaniem');
+  }
+
+  @override
+  void dispose() {
+    // Zwalniamy zasoby
+    for (var field in _formFields) {
+      field.controller.dispose();
+      field.focusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
 
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +158,14 @@ class _RegisterViewState extends State<RegisterView> {
 
 
               Spacer(),
-              Center(
+/*              Center(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: const Text('Go back!'),
                 ),
-              ),
+              ),*/
 
               // Already have an account ? Sing In
               Padding(

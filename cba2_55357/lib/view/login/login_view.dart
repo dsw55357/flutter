@@ -342,7 +342,8 @@ class _LoginViewState extends State<LoginView> {
                           style: TextStyle(color: MyColors.purleColor, fontSize: 14),
                         ),
                         SizedBox(width: 5), // Odstęp między tekstami
-                        GestureDetector(
+
+                        (
                           onTap: () {
                             Navigator.push(
                               context,
