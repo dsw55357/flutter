@@ -53,6 +53,7 @@ class _RegisterViewState extends State<RegisterView> {
   final List<FormFieldData> _formFields = [];
 
   bool _obscureText = true;
+
   void _togglePasswordVisibility() {
     setState(() {
       _obscureText = !_obscureText;
@@ -65,10 +66,18 @@ class _RegisterViewState extends State<RegisterView> {
     if(value.isEmpty) {
       return '${field.hintText} nie może być pusty';
     }
+
+    if(field.name == 'passwordCon') {
+      final password = _formFields.firstWhere((f) => f.name == 'password').controller.text; // warunek, który sprawdza, czy nazwa pola to 'password'
+      if (value!= password) {
+        return 'Passwords do not match';
+      }
+    }
+
     return null;
   }
 
-  Future<void> _validate() async {
+  Future<void> _validateOnSubmit() async {
     print('analiza pól przed zapisaniem');
 
     setState(() {
@@ -127,7 +136,6 @@ class _RegisterViewState extends State<RegisterView> {
     ]);
 
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +218,7 @@ class _RegisterViewState extends State<RegisterView> {
 
               LoginButton(
                   text: 'Sign Up',
-                  onPressed: _validate, backgroundColor: MyColors.purle2Color
+                  onPressed: _validateOnSubmit, backgroundColor: MyColors.purle2Color
               ),
 
 
