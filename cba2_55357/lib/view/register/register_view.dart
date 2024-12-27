@@ -59,8 +59,29 @@ class _RegisterViewState extends State<RegisterView> {
     });
   }
 
+  String? _validateField(FormFieldData field){
+
+    final value = field.controller.text;
+    if(value.isEmpty) {
+      return '${field.hintText} nie może być pusty';
+    }
+    return null;
+  }
+
   Future<void> _validate() async {
     print('analiza pól przed zapisaniem');
+
+    setState(() {
+      for(var field in _formFields) {
+        field.error = _validateField(field);
+      }
+    });
+
+    if(_formFields.every((field) => field.error == null)) {
+      print('Form is valid');
+    } else {
+      print('Form contains errors');
+    }
   }
 
   @override
@@ -145,12 +166,11 @@ class _RegisterViewState extends State<RegisterView> {
                 hintText: "Email",
                 prefixIcon: Icon(Icons.email), // Można użyć dowolnej ikony
               ),*/
-              PasswordInputField(
-                controller: _formFields[2].controller,
-                focusNode: _formFields[2].focusNode,
-                errorText: _formFields[2].error,
-                obscureText: _obscureText,
-                onToggleVisibility: _togglePasswordVisibility,
+              EmailInputField(
+                controller: _formFields[1].controller,
+                focusNode: _formFields[1].focusNode,
+                errorText: _formFields[1].error,
+                hintText: _formFields[1].hintText,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
 

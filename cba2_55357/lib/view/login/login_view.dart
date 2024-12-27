@@ -111,6 +111,15 @@ class _LoginViewState extends State<LoginView> {
 
       } else {
         print("..użytkownik podał nieprawidłowe dane");
+
+        setState(() {
+          _emailError = null;
+          _passwordError = null;
+
+          _validateEmail();
+          _validatePassword();
+        });
+
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Invalid credentials')),
         );
