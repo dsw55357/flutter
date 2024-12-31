@@ -1,15 +1,12 @@
-# Sprawozdanie z projektu: 
+# Aplikacja Flutter: Logowanie i Rejestracja z SQLite
 
-## **Informacje ogólne**
-**Nazwa projektu**: Programowanie aplikacji mobilnych   
-**Repozytorium**: [GitHub Repository](https://github.com/dsw55357/flutter/tree/main/cba2_55357)  
-**Autor**: dsw55357  
-**Technologia**: Flutter - Framework do tworzenia aplikacji mobilnych, webowych i desktopowych.  
+## Cel projektu
+Celem projektu było stworzenie aplikacji mobilnej w Flutterze, która integruje interfejs użytkownika z lokalną bazą danych SQLite. Projekt demonstruje kluczowe funkcjonalności, takie jak logowanie, rejestracja oraz zarządzanie stanem użytkownika z wykorzystaniem `SharedPreferences`.
 
-## **Cel projektu**
-Celem projektu było opracowanie aplikacji mobilnej w Flutterze, która demonstruje określone funkcjonalności. Możliwe aspekty do zaimplementowania obejmują obsługę interfejsu użytkownika, logikę biznesową oraz integrację z usługami backendowymi.
+---
 
-## **Funkcjonalności**
+## Funkcjonalności
+
 ### Tworzenie interfejsu użytkownika
 - Dynamiczne formularze z obsługą pól tekstowych:
   - Wykorzystanie `TextFormField` dla pól wejściowych.
@@ -49,88 +46,95 @@ Celem projektu było opracowanie aplikacji mobilnej w Flutterze, która demonstr
     - Weryfikacja poświadczeń w bazie danych.
     - Obsługa błędów przy niepoprawnych danych.
 
+---
 
-## **Główne komponenty projektu**
-### 1. **Formularz logowania**
-   - Pole e-mail z walidacją
-   - Pole hasła z możliwością ukrycia/odsłonięcia
-   
-   ```dart
-   TextFormField(
-     decoration: InputDecoration(
-       labelText: 'Email',
-       prefixIcon: Icon(Icons.email),
-       border: OutlineInputBorder(
-         borderRadius: BorderRadius.circular(12),
-       ),
-     ),
-     keyboardType: TextInputType.emailAddress,
-   );
-   ```
-### 2. **Formularz rejestracji**
-   - Dynamicznie generowane pola na podstawie listy FormFieldData:
-   ```dart
-      final List<FormFieldData> _formFields = [
-      FormFieldData(name: 'name', controller: TextEditingController(), ...),
-      FormFieldData(name: 'email', controller: TextEditingController(), ...),
-      FormFieldData(name: 'password', controller: TextEditingController(), ...),
-      FormFieldData(name: 'passwordCon', controller: TextEditingController(), ...),
-      ];
-   ```
-### 3. **Nawigacja między ekranami**
-   - Obsługa nawigacji za pomocą **Navigator.push()** i **Navigator.pop()**.
-   - Tworzenie zorganizowanej struktury aplikacji z oddzielnymi ekranami.
+## Zestawienie klas i ich funkcji
 
-### 4. **Wylogowanie użytkownika**
-   ```dart
-   Future<void> _logout(BuildContext context) async {
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-   await prefs.remove('isLoggedIn');
-   Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginView()),
-   );
-   }
-   ```
+### **1. `DatabaseHelper`**
+Klasa zarządzająca operacjami na lokalnej bazie danych SQLite.
 
+**Funkcje:**
+- `get database`: Inicjalizuje lub zwraca istniejącą instancję bazy danych.
+- `_initDB(String fileName)`: Tworzy nową bazę danych.
+- `_createDB(Database db, int version)`: Tworzy tabelę `users`.
+- `hashPassword(String password)`: Haszowanie haseł za pomocą SHA-256.
+- `registerUser(String name, String email, String password)`: Dodaje użytkownika do bazy.
+- `loginUser(String email, String password)`: Weryfikacja poświadczeń użytkownika.
+- `close()`: Zamyka połączenie z bazą danych.
 
-### 5. **Zarządzanie stanem**
-   - Proste zarządzanie stanem dla kontroli interakcji użytkownika.
-   - Wykorzystanie **TextEditingController** do obsługi danych wprowadzanych w formularzu.
+---
 
-## **Struktura kodu**
-- **Główne pliki i katalogi**:
-  - `lib/`: Zawiera główną logikę aplikacji Flutter.
-  - `main.dart`: Punkt wejścia aplikacji.
-  - `view/`: Widoki aplikacji (logowanie, rejestracja, ekran główny).
-  - `utils/`: Narzędzia pomocnicze, takie jak kolory (MyColors) i obrazy (MyImages).
-  - `widgets/`: Niestandardowe widżety, takie jak LoginButton i CustomBackButton.
-  - `utils/database_helper.dart`: Klasa zarządzająca bazą danych SQLite.
+### **2. `LoginView`**
+Widget obsługujący logowanie użytkownika.
 
-## **Użyte technologie**
-- **Flutter SDK**: Framework do budowy aplikacji wieloplatformowych.
+**Funkcje:**
+- `_validateEmail()`: Waliduje adres e-mail.
+- `_validatePassword()`: Waliduje hasło pod kątem pustych wartości i minimalnej długości.
+- `_validateOnSubmit()`: Sprawdza dane logowania i przekierowuje do ekranu głównego (`HomeView`).
+
+---
+
+### **3. `RegisterView`**
+Widget do rejestracji nowego użytkownika.
+
+**Funkcje:**
+- `_validateField(FormFieldData field)`: Waliduje pola formularza.
+- `_validateOnSubmit()`: Wywołuje `_registerUser` po poprawnej walidacji.
+- `_registerUser(String name, String email, String password)`: Rejestruje nowego użytkownika w bazie danych.
+
+---
+
+### **4. `HomeView`**
+Ekran główny aplikacji.
+
+**Funkcje:**
+- `_logout(BuildContext context)`: Wylogowuje użytkownika i przekierowuje do ekranu logowania.
+
+---
+
+### **5. Widżety i pomocnicze klasy**
+- **`EmailInputField`**: Pole tekstowe dla adresu e-mail.
+- **`PasswordInputField`**: Pole tekstowe dla hasła z możliwością zmiany widoczności.
+- **`ForgetPasswordText`**: Obsługuje akcję "Zapomniałem hasła".
+- **`LoginButton`**: Przycisk akcji (logowanie/rejestracja).
+- **`ActionPrompt`**: Wyświetla pytanie i akcję, np. "Sign Up".
+- **`CustomBackButton`**: Przycisk powrotu z obsługą powrotu do poprzedniego ekranu.
+
+---
+
+## Struktura projektu
+
+### Główne pliki i katalogi:
+- **`lib/`**: Główna logika aplikacji.
+  - **`main.dart`**: Punkt wejścia aplikacji.
+  - **`view/`**: Widoki aplikacji (logowanie, rejestracja, ekran główny).
+  - **`utils/`**: Narzędzia pomocnicze, np. `MyColors`, `MyImages`, `DatabaseHelper`.
+  - **`widgets/`**: Niestandardowe widżety, np. `EmailInputField`, `LoginButton`.
+
+---
+
+## Użyte technologie
+- **Flutter SDK**: Framework do tworzenia aplikacji mobilnych.
 - **Dart**: Język programowania używany w Flutterze.
-- **Pub.dev**: Użycie zależności (np. `flutter_form_builder` lub `provider`, jeśli są używane).
 - **SQLite**: Lokalne zarządzanie bazą danych.
 - **crypto**: Zabezpieczenie haseł użytkowników poprzez hashowanie.
-- **SharedPreferences**: Przechowywanie flagi isLoggedIn.
+- **SharedPreferences**: Przechowywanie flagi `isLoggedIn`.
 
+---
 
-## **Możliwe ulepszenia**
-1. **Rozszerzenie funkcjonalności UI**:
-   - Dodanie efektów animacji, np. przy przejściu między ekranami.
-
-2. **Poprawa walidacji danych**:
-   - Dodanie bardziej zaawansowanych reguł walidacji (np. sprawdzanie siły hasła).
-
-3. **Integracja z backendem:**:
+## Możliwe ulepszenia
+1. **Obsługa błędów**:
+   - Dodanie bardziej szczegółowych komunikatów o błędach.
+2. **Rozszerzenie bazy danych**:
+   - Dodanie dodatkowych kolumn, np. `created_at` i `updated_at`.
+3. **Testy jednostkowe**:
+   - Testowanie walidacji formularzy i funkcji logowania/rejestracji.
+4. **Integracja z backendem**:
    - Synchronizacja danych z serwerem.
+5. **Personalizacja UI**:
+   - Dodanie animacji przy przejściach między ekranami.
 
-4. **Testy jednostkowe**:
-   - Dodanie testów dla kluczowych funkcji aplikacji, np. walidacji danych w formularzu.
-5. **Rozszerzenie bazy danych**:
-   - Dodanie dodatkowych kolumn, takich jak created_at i updated_at.
+---
 
-## **Podsumowanie**
-Projekt wprowadza w podstawową aplikację mobilną z wykorzystaniem Fluttera. Kluczowym aspektem projektu jest dobre zrozumienie podstaw Fluttera i jego możliwości w zakresie budowy interfejsu użytkownika oraz logiki aplikacji. Repozytorium jest dobrym punktem wyjścia do rozwijania bardziej złożonych aplikacji.
-
+## Podsumowanie
+Projekt jest solidną podstawą aplikacji mobilnej w Flutterze, integrującą lokalną bazę danych i funkcjonalności logowania oraz rejestracji. Dzięki modularnej strukturze kodu, aplikacja jest łatwa w rozwoju i dostosowaniu do nowych wymagań.
