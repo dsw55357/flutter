@@ -198,7 +198,7 @@ class _RegisterViewState extends State<RegisterView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 59), // Przestrzeń
+              const SizedBox(height: 49), // Przestrzeń
               CustomBackButton(),
       
               const SizedBox(height: 62), // Przestrzeń od góry

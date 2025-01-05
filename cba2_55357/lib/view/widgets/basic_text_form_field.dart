@@ -72,6 +72,14 @@ class EmailInputField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0),
                 borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
               ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 1.0),
+              ),
               //prefixIcon: Icon(Icons.person),
               prefixIcon: prefixIcon ?? Icon(Icons.person), // Ustawienie domyślnej ikony
               errorText: errorText,
@@ -129,6 +137,14 @@ class PasswordInputField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
                 borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 1.0),
               ),
               prefixIcon: Icon(Icons.lock),
               errorText: errorText,
