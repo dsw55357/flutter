@@ -2,6 +2,7 @@
 import 'package:cba2_55357/utils/database_helper.dart';
 import 'package:flutter/material.dart';
 import '../../utils/my_colors.dart';
+import '../../utils/top_right_ellipse.dart';
 import '../home/home.dart';
 import '../login/login_view.dart';
 import '../widgets/basic_text_form_field.dart';
@@ -173,20 +174,38 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+        children: [
+          TopRightEllipse(
+            color: MyColors.purleColor,
+            width: 128,
+            height: 128,
+            top: -88,
+            left: 310, // Dopasowanie pozycji do szerokości ekranu
+          ),
+          // Elipsa w prawym górnym rogu
+          TopRightEllipse(
+          color: MyColors.purle2Color,
+          width: 142,
+          height: 142,
+          top: -47,
+          left: 381, // Dopasowanie pozycji do szerokości ekranu
+        ),
+      
+        Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(height: 59), // Przestrzeń
               CustomBackButton(),
-
+      
               const SizedBox(height: 62), // Przestrzeń od góry
               SignInHeader(text: 'Sign Up'),
               SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
-
-/*              EmailInputField(
+      
+        /*              EmailInputField(
                   controller: _nameController,
                   focusNode: _nameFocus,
                   errorText: _nameError,
@@ -199,8 +218,8 @@ class _RegisterViewState extends State<RegisterView> {
                 hintText: _formFields[0].hintText,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
-
-/*              EmailInputField(
+      
+        /*              EmailInputField(
                 controller: _emailController,
                 focusNode: _emailFocus,
                 errorText: _emailError,
@@ -214,8 +233,8 @@ class _RegisterViewState extends State<RegisterView> {
                 hintText: _formFields[1].hintText,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
-
-/*              PasswordInputField(
+      
+        /*              PasswordInputField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 errorText: _passwordError,
@@ -230,8 +249,8 @@ class _RegisterViewState extends State<RegisterView> {
                 onToggleVisibility: _togglePasswordVisibility,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
-
-/*              PasswordInputField(
+      
+        /*              PasswordInputField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 errorText: _passwordError,
@@ -248,15 +267,15 @@ class _RegisterViewState extends State<RegisterView> {
                 hintText: _formFields[3].hintText,
               ),
               SizedBox(height: 40), // Odstęp między pierwszym a drugim polem
-
+      
               LoginButton(
                   text: 'Sign Up',
                   onPressed: _validateOnSubmit, backgroundColor: MyColors.purle2Color
               ),
-
-
+      
+      
               Spacer(),
-/*              Center(
+        /*              Center(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -264,7 +283,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: const Text('Go back!'),
                 ),
               ),*/
-
+      
               // Already have   an account ? Sing In
               Padding(
                 padding: const EdgeInsets.only(bottom: 62),
@@ -283,6 +302,9 @@ class _RegisterViewState extends State<RegisterView> {
               ),
             ],
           ),
+        ),
+      
+      ],
         ),
       ),
     );
