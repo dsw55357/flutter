@@ -1,3 +1,4 @@
+import 'package:cba2_55357/view/home/home.dart';
 import 'package:cba2_55357/view/login/login_view.dart';
 import 'package:cba2_55357/view/register/register_view.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Navigation Basics',
       debugShowCheckedModeBanner: false, // Ukrywa pasek "DEBUG"
-      // home: isLoggedIn ? const HomeView() : const LoginView(),
-      home: isLoggedIn ? const RegisterView() : const LoginView(),
+      home: isLoggedIn ? const LoginView() : const HomeView(),
+      //home: isLoggedIn ? const RegisterView() : const LoginView(),
     );
   }
 }

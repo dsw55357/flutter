@@ -2,7 +2,6 @@
 import 'package:cba2_55357/utils/database_helper.dart';
 import 'package:flutter/material.dart';
 import '../../utils/my_colors.dart';
-import '../../utils/my_images.dart';
 import '../home/home.dart';
 import '../login/login_view.dart';
 import '../widgets/basic_text_form_field.dart';
@@ -175,7 +174,6 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SizedBox(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -185,7 +183,7 @@ class _RegisterViewState extends State<RegisterView> {
               CustomBackButton(),
 
               const SizedBox(height: 62), // Przestrzeń od góry
-              SignInHeader(),
+              SignInHeader(text: 'Sign Up'),
               SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
 
 /*              EmailInputField(
@@ -267,7 +265,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),*/
 
-              // Already have an account ? Sing In
+              // Already have   an account ? Sing In
               Padding(
                 padding: const EdgeInsets.only(bottom: 62),
                 child: ActionPrompt(

@@ -2,7 +2,6 @@ import 'package:cba2_55357/utils/my_colors.dart';
 import 'package:cba2_55357/utils/my_images.dart';
 import 'package:cba2_55357/view/home/home.dart';
 import 'package:cba2_55357/view/register/register_view.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -190,7 +189,7 @@ class _LoginViewState extends State<LoginView> {
             child: Column( // opis jak zmienić 1:04:12
               // children - lista
               children: [
-                const SizedBox(height: 62), // Przestrzeń od góry
+                const SizedBox(height: 6), // Przestrzeń od góry
                 Image.asset(MyImages.logo),
                 // const
                 const SizedBox(height: 21), // Odstęp między grafiką a tekstem
@@ -209,7 +208,6 @@ class _LoginViewState extends State<LoginView> {
                 ), */
 
                 SignInHeader(),
-
 
                 SizedBox(height: 20), // Odstęp między tekstem a polem tekstowym
 
@@ -325,8 +323,8 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 */
                 LoginButton(
-                  text: 'Zaloguj się',
-                  onPressed: _validateOnSubmit, backgroundColor: MyColors.purle2Color
+                    text: 'Sign In',
+                    onPressed: _validateOnSubmit, backgroundColor: MyColors.purle2Color
                 ),
 
                 Spacer(),

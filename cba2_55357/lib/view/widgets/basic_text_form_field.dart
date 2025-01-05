@@ -5,7 +5,11 @@ import '../../utils/my_images.dart';
 import '../login/login_view.dart';
 
 class SignInHeader extends StatelessWidget {
-  const SignInHeader({Key? key}) : super(key: key);
+  final String text; // Pole do przechowywania tekstu
+  const SignInHeader({
+    Key? key,
+    this.text = 'Sign In', // Domyślny tekst
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class SignInHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 19.0),
         child: Text(
-          'Sign In',
+          text,
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -57,7 +61,16 @@ class EmailInputField extends StatelessWidget {
               hintText: hintText,
               //border: OutlineInputBorder(),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0), // Zaokrąglenie narożników
+                borderRadius: BorderRadius.circular(15.0),// Zaokrąglenie narożników
+                borderSide: BorderSide(color: MyColors.borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
               ),
               //prefixIcon: Icon(Icons.person),
               prefixIcon: prefixIcon ?? Icon(Icons.person), // Ustawienie domyślnej ikony
@@ -107,6 +120,15 @@ class PasswordInputField extends StatelessWidget {
               //border: OutlineInputBorder(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0), // Zaokrąglenie narożników
+                borderSide: BorderSide(color: MyColors.borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: MyColors.borderColor, width: 2.0),
               ),
               prefixIcon: Icon(Icons.lock),
               errorText: errorText,
