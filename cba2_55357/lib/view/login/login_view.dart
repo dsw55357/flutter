@@ -68,6 +68,7 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
+  // fun.powstała tylko w celach testowcyh
   void printDatabasePath() async {
     String dbPath = await getDatabasesPath();
     print('Database path: $dbPath');

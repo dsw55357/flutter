@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:crypto/crypto.dart';
@@ -8,6 +7,8 @@ import 'package:crypto/crypto.dart';
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
   static Database? _database;
+
+  static const _tableName = 'tasks';
 
   DatabaseHelper._init();
 
@@ -77,6 +78,19 @@ class DatabaseHelper {
 
     return user.isNotEmpty;
   }
+
+  Future<List<Map<String, dynamic>>> getUsers() async {
+    final db = await database;
+    final List<Map<String, dynamic>> userMaps = await db.query('users'); // Zapytanie do tabeli "users"
+
+    // Debugowanie: wypisz dane użytkowników
+    for (var user in userMaps) {
+      print('ID: ${user['id']}, Name: ${user['name']}, Email: ${user['email']}, Password: ${user['password']}');
+    }
+
+    return userMaps; // Zwraca listę map z użytkownikami
+  }
+
 
   Future close() async {
     final db = await _database;
